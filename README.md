@@ -7,3 +7,9 @@ This repo was created in an effort to complete the setup first sought after in t
 
 The following guide is super helpful for the nitty gritty basics of setting up a Node, Express, and PG application with Sequelize.
 https://scotch.io/tutorials/getting-started-with-node-express-and-postgres-using-sequelize
+
+#Initial Setup Steps
+- Run `user-groups-dev` in the terminal. You must have Postgres installed to perform this. This will create the local database
+- Modify the server/config file accordingly with your credentials to connect to your local db
+- Run `sequelize db:migrate` in the terminal before launching the application. This will perform all the migrations to setup the database
+- Run `npm run dev` 
