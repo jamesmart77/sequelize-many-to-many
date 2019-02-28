@@ -1,6 +1,5 @@
 const Group = require('../server/models').Group;
 const User = require('../server/models').User;
-const GroupUser = require('../server/models').GroupUser;
 
 module.exports = {
   async create(req, res) {
@@ -10,24 +9,18 @@ module.exports = {
             name: req.body.name,
         });
 
-        let groupUser = await GroupUser.create({
-            userId: req.body.userId,
-            groupId: group.id
-        })
+        let user = await User.findById(req.body.userId);
 
-        let usersGroups = await User.findOne({
-            where: { 
-                id: req.body.userId
-            },
+        //populate GroupUser join table
+        await group.addUser(user);
+
+        let usersGroups = await User.findById(req.body.userId,{
             include: [{
                 model: Group,
                 as: 'groups',
                 attributes: ['id', 'name']
             }]
         })
-
-        console.log("NEW GROUP: ", group);
-        console.log("NEW GROUPUSER: ", groupUser);
 
         res.status(201).send(usersGroups);
     }
